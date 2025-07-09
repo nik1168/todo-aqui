@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo Aquí - Tu Canal de TikTok Boliviano</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FF0050'/%3E%3Cstop offset='100%25' style='stop-color:%2300F2EA'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='50' cy='50' r='45' fill='url(%23g)'/%3E%3Ctext x='50' y='60' font-family='Arial Black' font-size='36' font-weight='900' text-anchor='middle' fill='white'%3ETA%3C/text%3E%3C/svg%3E">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #FF0050;
+            --secondary: #00F2EA;
+            --dark: #0F0F0F;
+            --light: #FFFFFF;
+            --glass: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --bolivia-red: #D52B1E;
+            --bolivia-yellow: #F4E409;
+            --bolivia-green: #007934;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--dark);
+            color: var(--light);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--bolivia-red) 33.33%, var(--bolivia-yellow) 33.33%, var(--bolivia-yellow) 66.66%, var(--bolivia-green) 66.66%);
+            z-index: 3;
+        }
+
+        .animated-bg {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(45deg, #FF0050, #00F2EA, #FF0050);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            filter: blur(100px);
+            opacity: 0.5;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .hero-content {
+            position: relative;
+            text-align: center;
+            z-index: 2;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .app-icon {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 2rem;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-10px) scale(1.05); }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo {
+            font-size: 5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .tagline {
+            font-size: 1.5rem;
+            margin-bottom: 3rem;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 3rem;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            text-decoration: none;
+            color: var(--light);
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: var(--primary);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .cta-button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .cta-button span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 0, 80, 0.3);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 5%;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            padding: 1rem 5%;
+            background: rgba(15, 15, 15, 0.95);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Categories Section */
+        .categories {
+            padding: 5rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--bolivia-red) 33.33%, var(--bolivia-yellow) 33.33%, var(--bolivia-yellow) 66.66%, var(--bolivia-green) 66.66%);
+            border-radius: 2px;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .category-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-bg {
+            position: absolute;
+            inset: 0;
+            border-radius: 20px;
+            transition: opacity 0.3s ease;
+        }
+
+        .category-card:hover .category-bg {
+            opacity: 0.2 !important;
+        }
+
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            border-radius: 20px;
+            opacity: 0;
+            z-index: -1;
+            transition: opacity 0.3s ease;
+        }
+
+        .category-card:hover::before {
+            opacity: 1;
+        }
+
+        .category-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .category-card.active {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-10px) scale(1.02);
+            border-color: var(--primary);
+        }
+
+        .category-card.active::before {
+            opacity: 1;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .category-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+            animation: float 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 10px rgba(255,255,255,0.5));
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .category-card:nth-child(1) .category-icon { animation-delay: 0s; }
+        .category-card:nth-child(2) .category-icon { animation-delay: 0.5s; }
+        .category-card:nth-child(3) .category-icon { animation-delay: 1s; }
+
+        .category-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            position: relative;
+            z-index: 1;
+        }
+
+        .category-description {
+            opacity: 0.9;
+            line-height: 1.6;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Videos Section */
+        .videos {
+            padding: 5rem 5%;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .video-card {
+            background: var(--dark);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .video-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(255, 0, 80, 0.2);
+        }
+
+        .video-thumbnail {
+            width: 100%;
+            height: 300px;
+            position: relative;
+            overflow: hidden;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #1a1a1a;
+        }
+
+        .video-thumbnail-content {
+            text-align: center;
+            z-index: 1;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .video-thumbnail-content h3 {
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        }
+
+        .video-thumbnail-content p {
+            color: white;
+            font-size: 1.2rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        }
+
+        .video-thumbnail-content h3.emoji {
+            font-size: 3.5rem;
+        }
+
+        .video-thumbnail-content p.emoji {
+            font-size: 2.5rem;
+        }
+
+        .video-thumbnail::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.5) 100%);
+            pointer-events: none;
+        }
+
+        .video-card:hover .video-thumbnail::after {
+            background: linear-gradient(to bottom, transparent 30%, rgba(0,0,0,0.7) 100%);
+        }
+
+        .video-duration {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            z-index: 2;
+        }
+
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 2;
+        }
+
+        .video-card:hover .play-button {
+            transform: translate(-50%, -50%) scale(1.2);
+            background: var(--primary);
+        }
+
+        .play-icon {
+            width: 0;
+            height: 0;
+            border-left: 20px solid var(--dark);
+            border-top: 12px solid transparent;
+            border-bottom: 12px solid transparent;
+            margin-left: 5px;
+        }
+
+        .video-card:hover .play-icon {
+            border-left-color: var(--light);
+        }
+
+        .video-info {
+            padding: 1rem;
+        }
+
+        .video-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .video-stats {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.9rem;
+            opacity: 0.7;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .video-stats span:last-child {
+            margin-left: auto;
+            background: var(--glass);
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            opacity: 1;
+        }
+
+        /* Footer */
+        footer {
+            padding: 3rem 5%;
+            background: rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-link {
+            width: 50px;
+            height: 50px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: var(--light);
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(255, 0, 80, 0.3);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 3rem;
+            }
+
+            .tagline {
+                font-size: 1.2rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .category-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .video-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+        }
+
+        /* Loading Animation */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--dark);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader-spinner {
+            width: 60px;
+            height: 60px;
+            border: 3px solid var(--glass-border);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loader -->
+    <div class="loader" id="loader">
+        <div class="loader-spinner"></div>
+        <p style="margin-top: 2rem; color: var(--light); font-weight: 600;">Cargando desde Bolivia... 🇧🇴</p>
+    </div>
+
+    <!-- Bolivia Banner -->
+    <div style="background: linear-gradient(90deg, var(--bolivia-red) 33.33%, var(--bolivia-yellow) 33.33%, var(--bolivia-yellow) 66.66%, var(--bolivia-green) 66.66%); height: 3px; position: fixed; top: 0; left: 0; right: 0; z-index: 10000;"></div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">Todo Aquí</div>
+            <ul class="nav-links">
+                <li><a href="#home">Inicio</a></li>
+                <li><a href="#categories">Categorías</a></li>
+                <li><a href="#videos">Videos</a></li>
+                <li><a href="#contact">Contacto</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="animated-bg"></div>
+        <div class="hero-content">
+            <!-- App Icon -->
+            <div class="app-icon">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="iconGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#FF0050;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#00F2EA;stop-opacity:1" />
+                        </linearGradient>
+                        <filter id="iconShadow">
+                            <feDropShadow dx="0" dy="4" stdDeviation="3" flood-opacity="0.3"/>
+                        </filter>
+                        <filter id="iconGlow">
+                            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                            <feMerge>
+                                <feMergeNode in="coloredBlur"/>
+                                <feMergeNode in="SourceGraphic"/>
+                            </feMerge>
+                        </filter>
+                    </defs>
+                    <circle cx="50" cy="50" r="45" fill="url(#iconGrad)" filter="url(#iconShadow)"/>
+                    <text x="50" y="60" font-family="Arial Black, sans-serif" font-size="36" font-weight="900" text-anchor="middle" fill="#FFFFFF" filter="url(#iconGlow)">TA</text>
+                </svg>
+            </div>
+            <h1 class="logo">Todo Aquí</h1>
+            <p class="tagline">Lo mejor de Bolivia: Noticias, Deportes y Gastronomía</p>
+            <p style="font-size: 1rem; opacity: 0.8; margin-top: -0.5rem; margin-bottom: 2rem;">🇧🇴 Contenido 100% Boliviano</p>
+            <a href="#categories" class="cta-button">
+                <span>Descubre Bolivia</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories" id="categories">
+        <h2 class="section-title">Nuestro Contenido</h2>
+        <div class="category-grid">
+            <div class="category-card" data-category="news">
+                <div class="category-bg" style="background: linear-gradient(135deg, #e74c3c, #c0392b); opacity: 0.1;"></div>
+                <span class="category-icon">📰</span>
+                <h3 class="category-title">Noticias</h3>
+                <p class="category-description">Las últimas noticias de La Paz, Santa Cruz, Cochabamba y toda Bolivia. Política, economía y actualidad nacional en videos cortos y dinámicos.</p>
+            </div>
+            <div class="category-card" data-category="sports">
+                <div class="category-bg" style="background: linear-gradient(135deg, #2ecc71, #27ae60); opacity: 0.1;"></div>
+                <span class="category-icon">⚽</span>
+                <h3 class="category-title">Deportes</h3>
+                <p class="category-description">La Verde, Liga Boliviana, Wilstermann, Bolívar, The Strongest y más. Todo el fútbol boliviano y deportes de altura en un solo lugar.</p>
+            </div>
+            <div class="category-card" data-category="kitchen">
+                <div class="category-bg" style="background: linear-gradient(135deg, #f39c12, #e67e22); opacity: 0.1;"></div>
+                <span class="category-icon">👨‍🍳</span>
+                <h3 class="category-title">Gastronomía</h3>
+                <p class="category-description">Salteñas, anticuchos, pique macho y más delicias bolivianas. Recetas tradicionales y modernas de nuestra rica gastronomía.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Videos Section -->
+    <section class="videos" id="videos">
+        <h2 class="section-title">Videos Destacados</h2>
+        <div style="text-align: center; margin-bottom: 2rem;">
+            <button id="showAllBtn" 
+                style="background: var(--glass); border: 1px solid var(--glass-border); color: var(--light); padding: 0.5rem 2rem; border-radius: 25px; cursor: pointer; font-weight: 600; backdrop-filter: blur(10px); transition: all 0.3s ease;"
+                onmouseover="this.style.background='var(--primary)'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 5px 15px rgba(255,0,80,0.3)'"
+                onmouseout="this.style.background='var(--glass)'; this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                Ver Todos
+            </button>
+        </div>
+        <div class="video-grid">
+            <!-- News Videos -->
+            <div class="video-card" data-category="news">
+                <div class="video-thumbnail" style="background: linear-gradient(135deg, rgba(231,76,60,0.9), rgba(192,57,43,0.9));">
+                    <div class="video-thumbnail-content">
+                        <h3>URGENTE</h3>
+                        <p>LA PAZ</p>
+                    </div>
+                    <div class="play-button">
+                        <div class="play-icon"></div>
+                    </div>
+                    <span class="video-duration">2:45</span>
+                </div>
+                <div class="video-info">
+                    <h4 class="video-title">Teleférico: Nueva Línea Plateada</h4>
+                    <div class="video-stats">
+                        <span>👁 125K</span>
+                        <span>❤️ 8.5K</span>
+                        <span>📰 Noticias</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="video-card" data-category="sports">
+                <div class="video-thumbnail" style="background: linear-gradient(135deg, rgba(39,174,96,0.9), rgba(241,196,15,0.9));">
+                    <div class="video-thumbnail-content">
+                        <h3>BOLÍVAR</h3>
+                        <p>CAMPEÓN</p>
+                    </div>
+                    <div class="play-button">
+                        <div class="play-icon"></div>
+                    </div>
+                    <span class="video-duration">4:20</span>
+                </div>
+                <div class="video-info">
+                    <h4 class="video-title">Bolívar 3 - 0 The Strongest: Clásico Paceño</h4>
+                    <div class="video-stats">
+                        <span>👁 289K</span>
+                        <span>❤️ 45K</span>
+                        <span>⚽ Deportes</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="video-card" data-category="kitchen">
+                <div class="video-thumbnail" style="background: linear-gradient(135deg, rgba(243,156,18,0.9), rgba(230,126,34,0.9));">
+                    <div class="video-thumbnail-content">
+                        <h3 class="emoji">🥟</h3>
+                        <p>SALTEÑAS</p>
+                    </div>
+                    <div class="play-button">
+                        <div class="play-icon"></div>
+                    </div>
+                    <span class="video-duration">0:58</span>
+                </div>
+                <div class="video-info">
+                    <h4 class="video-title">Salteñas Perfectas en 60 Segundos</h4>
+                    <div class="video-stats">
+                        <span>👁 167K</span>
+                        <span>❤️ 35K</span>
+                        <span>👨‍🍳 Gastronomía</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="video-card" data-category="news">
+                <div class="video-thumbnail" style="background: linear-gradient(135deg, rgba(52,152,219,0.9), rgba(41,128,185,0.9));">
+                    <div class="video-thumbnail-content">
+                        <h3>ECONOMÍA</h3>
+                        <p>BOLIVIA</p>
+                    </div>
+                    <div class="play-button">
+                        <div class="play-icon"></div>
+                    </div>
+                    <span class="video-duration">3:15</span>
+                </div>
+                <div class="video-info">
+                    <h4 class="video-title">Litio en Uyuni: El Futuro de Bolivia</h4>
+                    <div class="video-stats">
+                        <span>👁 234K</span>
+                        <span>❤️ 28K</span>
+                        <span>📰 Noticias</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="video-card" data-category="sports">
+                <div class="video-thumbnail" style="background: linear-gradient(135deg, rgba(192,57,43,0.9), rgba(255,255,255,0.3)), linear-gradient(135deg, #c0392b, white);">
+                    <div class="video-thumbnail-content">
+                        <h3>WILSTER</h3>
+                        <p class="emoji">⚽</p>
+                    </div>
+                    <div class="play-button">
+                        <div class="play-icon"></div>
+                    </div>
+                    <span class="video-duration">5:30</span>
+                </div>
+                <div class="video-info">
+                    <h4 class="video-title">Wilstermann: Resumen Copa Libertadores</h4>
+                    <div class="video-stats">
+                        <span>👁 156K</span>
+                        <span>❤️ 22K</span>
+                        <span>⚽ Deportes</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="video-card" data-category="kitchen">
+                <div class="video-thumbnail" style="background: linear-gradient(135deg, rgba(231,76,60,0.9), rgba(192,57,43,0.9));">
+                    <div class="video-thumbnail-content">
+                        <h3 class="emoji">🍖</h3>
+                        <p>ANTICUCHOS</p>
+                    </div>
+                    <div class="play-button">
+                        <div class="play-icon"></div>
+                    </div>
+                    <span class="video-duration">1:30</span>
+                </div>
+                <div class="video-info">
+                    <h4 class="video-title">Anticuchos: Receta de la Abuela</h4>
+                    <div class="video-stats">
+                        <span>👁 198K</span>
+                        <span>❤️ 42K</span>
+                        <span>👨‍🍳 Gastronomía</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="video-card" data-category="news">
+                <div class="video-thumbnail" style="background: linear-gradient(135deg, rgba(52,73,94,0.9), rgba(255,0,80,0.9));">
+                    <div class="video-thumbnail-content">
+                        <h3>CARNAVAL</h3>
+                        <p>ORURO</p>
+                    </div>
+                    <div class="play-button">
+                        <div class="play-icon"></div>
+                    </div>
+                    <span class="video-duration">1:45</span>
+                </div>
+                <div class="video-info">
+                    <h4 class="video-title">Carnaval de Oruro 2025: Preparativos</h4>
+                    <div class="video-stats">
+                        <span>👁 312K</span>
+                        <span>❤️ 58K</span>
+                        <span>📰 Noticias</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="video-card" data-category="sports">
+                <div class="video-thumbnail" style="background: linear-gradient(90deg, #D52B1E 33.33%, #F4E409 33.33%, #F4E409 66.66%, #007934 66.66%);">
+                    <div class="video-thumbnail-content">
+                        <h3 style="text-shadow: 2px 2px 4px black, -1px -1px 0 black;">LA VERDE</h3>
+                        <p class="emoji">🇧🇴</p>
+                    </div>
+                    <div class="play-button">
+                        <div class="play-icon"></div>
+                    </div>
+                    <span class="video-duration">2:00</span>
+                </div>
+                <div class="video-info">
+                    <h4 class="video-title">La Verde: Convocatoria Eliminatorias</h4>
+                    <div class="video-stats">
+                        <span>👁 445K</span>
+                        <span>❤️ 65K</span>
+                        <span>⚽ Deportes</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="video-card" data-category="kitchen">
+                <div class="video-thumbnail" style="background: linear-gradient(135deg, rgba(211,84,0,0.9), rgba(230,126,34,0.9));">
+                    <div class="video-thumbnail-content">
+                        <h3>PIQUE</h3>
+                        <p>MACHO</p>
+                    </div>
+                    <div class="play-button">
+                        <div class="play-icon"></div>
+                    </div>
+                    <span class="video-duration">0:45</span>
+                </div>
+                <div class="video-info">
+                    <h4 class="video-title">Pique Macho Cochabambino Express</h4>
+                    <div class="video-stats">
+                        <span>👁 278K</span>
+                        <span>❤️ 52K</span>
+                        <span>👨‍🍳 Gastronomía</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="video-card" data-category="sports">
+                <div class="video-thumbnail" style="background: linear-gradient(135deg, rgba(231,76,60,0.9), rgba(44,62,80,0.9));">
+                    <div class="video-thumbnail-content">
+                        <h3>HERNÁN SILES</h3>
+                        <p>ALTURA 3600m</p>
+                    </div>
+                    <div class="play-button">
+                        <div class="play-icon"></div>
+                    </div>
+                    <span class="video-duration">2:30</span>
+                </div>
+                <div class="video-info">
+                    <h4 class="video-title">La Altura: Ventaja Boliviana en el Hernán Siles</h4>
+                    <div class="video-stats">
+                        <span>👁 365K</span>
+                        <span>❤️ 85K</span>
+                        <span>⚽ Deportes</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="video-card" data-category="kitchen">
+                <div class="video-thumbnail" style="background: linear-gradient(135deg, rgba(149,165,166,0.9), rgba(189,195,199,0.9));">
+                    <div class="video-thumbnail-content">
+                        <h3>SOPA DE</h3>
+                        <p>MANÍ</p>
+                    </div>
+                    <div class="play-button">
+                        <div class="play-icon"></div>
+                    </div>
+                    <span class="video-duration">1:20</span>
+                </div>
+                <div class="video-info">
+                    <h4 class="video-title">Sopa de Maní: Tradición Chuquisaqueña</h4>
+                    <div class="video-stats">
+                        <span>👁 145K</span>
+                        <span>❤️ 38K</span>
+                        <span>👨‍🍳 Gastronomía</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="video-card" data-category="kitchen">
+                <div class="video-thumbnail" style="background: linear-gradient(135deg, rgba(142,68,173,0.9), rgba(155,89,182,0.9));">
+                    <div class="video-thumbnail-content">
+                        <h3>API CON</h3>
+                        <p>PASTEL</p>
+                    </div>
+                    <div class="play-button">
+                        <div class="play-icon"></div>
+                    </div>
+                    <span class="video-duration">0:55</span>
+                </div>
+                <div class="video-info">
+                    <h4 class="video-title">Api con Pastel: Desayuno Paceño</h4>
+                    <div class="video-stats">
+                        <span>👁 328K</span>
+                        <span>❤️ 72K</span>
+                        <span>👨‍🍳 Gastronomía</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="social-links">
+            <a href="#" class="social-link" aria-label="TikTok">📱</a>
+            <a href="#" class="social-link" aria-label="Instagram">📷</a>
+            <a href="#" class="social-link" aria-label="YouTube">🎥</a>
+            <a href="#" class="social-link" aria-label="Twitter">🐦</a>
+        </div>
+        <p>&copy; 2025 Todo Aquí Bolivia. Todos los derechos reservados.</p>
+        <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.8;">Hecho con ❤️ en La Paz, Bolivia 🇧🇴</p>
+    </footer>
+
+    <script>
+        // Hide loader when page loads
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('hidden');
+            }, 1000);
+            
+            // Bolivian greeting
+            console.log('🇧🇴 Jallalla Bolivia! - Todo Aquí TikTok');
+            console.log('📍 Transmitiendo desde La Paz, Bolivia');
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Category card interactions
+        const categoryCards = document.querySelectorAll('.category-card');
+        let activeCategory = 'all';
+
+        // Show All button
+        const showAllBtn = document.getElementById('showAllBtn');
+        showAllBtn.addEventListener('click', () => {
+            categoryCards.forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.video-card').forEach(video => {
+                video.style.display = 'block';
+                video.style.animation = 'fadeIn 0.5s ease-out';
+            });
+            activeCategory = 'all';
+        });
+
+        categoryCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const category = card.dataset.category;
+                const videoCards = document.querySelectorAll('.video-card');
+                
+                // Remove active state from all cards
+                categoryCards.forEach(c => c.classList.remove('active'));
+                card.classList.add('active');
+                
+                // Filter videos
+                videoCards.forEach(video => {
+                    if (category === 'all' || video.dataset.category === category) {
+                        video.style.display = 'block';
+                        video.style.animation = 'fadeIn 0.5s ease-out';
+                    } else {
+                        video.style.display = 'none';
+                    }
+                });
+                
+                // Scroll to videos section
+                document.getElementById('videos').scrollIntoView({ behavior: 'smooth' });
+                
+                // Add ripple effect
+                const ripple = document.createElement('div');
+                ripple.style.cssText = `
+                    position: absolute;
+                    width: 100px;
+                    height: 100px;
+                    background: rgba(255, 255, 255, 0.5);
+                    border-radius: 50%;
+                    transform: scale(0);
+                    animation: rippleEffect 0.6s ease-out;
+                    pointer-events: none;
+                `;
+                
+                card.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.style.animation = 'rippleEffect 0.6s ease-out';
+                }, 10);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+                
+                activeCategory = category;
+                console.log(`Filtrando por ${category}`);
+            });
+        });
+
+        // Add ripple animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes rippleEffect {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Video card hover effects
+        const allVideoCards = document.querySelectorAll('.video-card');
+        allVideoCards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.zIndex = '10';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                setTimeout(() => {
+                    card.style.zIndex = '1';
+                }, 300);
+            });
+            
+            card.addEventListener('click', () => {
+                // Simulate video playback
+                console.log('Reproduciendo video...');
+                // Here you would implement actual video playback functionality
+            });
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '0';
+                    entry.target.style.transform = 'translateY(30px)';
+                    
+                    setTimeout(() => {
+                        entry.target.style.transition = 'all 0.6s ease-out';
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }, 100);
+                    
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // Observe all category cards and video cards
+        document.querySelectorAll('.category-card, .video-card').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Dynamic year in footer
+        const currentYear = new Date().getFullYear();
+        document.querySelector('footer p').innerHTML = `&copy; ${currentYear} Todo Aquí Bolivia. Todos los derechos reservados.`;
+    </script>
+</body>
+</html>
