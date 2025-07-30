@@ -775,6 +775,55 @@
             box-shadow: 0 10px 20px rgba(255, 0, 80, 0.3);
         }
 
+        /* TikTok Feed Section */
+        .tiktok-feed {
+            padding: 5rem 5%;
+            background: rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .tiktok-feed::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--bolivia-red) 33.33%, var(--bolivia-yellow) 33.33%, var(--bolivia-yellow) 66.66%, var(--bolivia-green) 66.66%);
+        }
+
+        .tiktok-widget-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 600px;
+            background: var(--glass);
+            border-radius: 20px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tiktok-widget-container::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            border-radius: 20px;
+            opacity: 0.1;
+            z-index: -1;
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        .tiktok-embed {
+            width: 100%;
+            height: 100%;
+        }
+
         /* Mobile Responsive */
         @media (max-width: 768px) {
             .logo {
@@ -871,6 +920,7 @@
                 <li><a href="#team">Equipo</a></li>
                 <li><a href="#categories">Categorías</a></li>
                 <li><a href="#videos">Videos</a></li>
+                <li><a href="#tiktok-feed">TikTok Live</a></li>
                 <li><a href="#contact">Contacto</a></li>
             </ul>
         </div>
@@ -945,7 +995,7 @@
         
         <!-- Team Photo Section -->
         <div class="team-photo-section">
-            <h3 class="team-photo-title">Unidos por Bolivia 🇧🇴</h3>
+            <h3 class="team-photo-title">Unidos por Bolivia</h3>
             <p class="team-photo-subtitle">Tres amigos, tres pasiones, un solo objetivo: mostrar lo mejor de Bolivia al mundo</p>
             <div class="team-photo-container">
                 <img src="https://i.imgur.com/qfifd2d.jpeg" alt="Todo Aquí - Equipo Completo" class="team-photo" />
@@ -1056,6 +1106,20 @@
 
 
 
+        </div>
+    </section>
+
+    <!-- TikTok Feed Section -->
+    <section class="tiktok-feed" id="tiktok-feed">
+        <h2 class="section-title">Últimos Videos en TikTok</h2>
+        <p style="text-align: center; margin-bottom: 3rem; opacity: 0.8;">Síguenos en @todoaqui_bol para más contenido boliviano</p>
+        <div class="tiktok-widget-container">
+            <!-- TikTok Profile Embed Widget -->
+            <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@todoaqui_bol" data-unique-id="todoaqui_bol" data-embed-type="creator" style="max-width: 100%; min-width: 288px;">
+                <section>
+                    <a target="_blank" href="https://www.tiktok.com/@todoaqui_bol?refer=creator_embed">@todoaqui_bol</a>
+                </section>
+            </blockquote>
         </div>
     </section>
 
@@ -1236,5 +1300,8 @@
         const currentYear = new Date().getFullYear();
         document.querySelector('footer p').innerHTML = `&copy; ${currentYear} Todo Aquí Bolivia. Todos los derechos reservados.`;
     </script>
+
+    <!-- TikTok Embed Script -->
+    <script async src="https://www.tiktok.com/embed.js"></script>
 </body>
 </html>
