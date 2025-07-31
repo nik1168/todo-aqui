@@ -767,12 +767,48 @@
             color: var(--light);
             font-size: 1.5rem;
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social-link svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+            z-index: 1;
+            position: relative;
+        }
+
+        .social-link::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.4s ease;
+        }
+
+        .social-link:nth-child(1)::before {
+            background: #000000;
+        }
+
+        .social-link:nth-child(2)::before {
+            background: linear-gradient(45deg, #833AB4, #C13584, #E1306C, #FCAF45, #F56040);
+        }
+
+        .social-link:hover::before {
+            width: 100%;
+            height: 100%;
         }
 
         .social-link:hover {
-            background: var(--primary);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(255, 0, 80, 0.3);
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            color: white;
+            border-color: transparent;
         }
 
         /* TikTok Feed Section */
@@ -822,6 +858,135 @@
         .tiktok-embed {
             width: 100%;
             height: 100%;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 5rem 5%;
+            background: linear-gradient(135deg, rgba(255, 0, 80, 0.05), rgba(0, 242, 234, 0.05));
+            position: relative;
+        }
+
+        .contact-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .contact-subtitle {
+            text-align: center;
+            font-size: 1.3rem;
+            margin-bottom: 3rem;
+            opacity: 0.9;
+        }
+
+        .contact-content {
+            background: var(--glass);
+            border-radius: 20px;
+            padding: 3rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .contact-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .contact-info > p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .contact-card {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            margin: 2rem 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 0, 80, 0.2);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .contact-icon {
+            font-size: 3rem;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .contact-details h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--secondary);
+        }
+
+        .contact-email {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--light);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .contact-email:hover {
+            color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .contact-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateX(5px);
+        }
+
+        .feature-icon {
+            font-size: 1.5rem;
+        }
+
+        .response-time {
+            text-align: center;
+            font-size: 1rem;
+            opacity: 0.8;
+            margin-top: 2rem;
+            padding: 1rem;
+            background: rgba(0, 242, 234, 0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(0, 242, 234, 0.2);
         }
 
         /* Mobile Responsive */
@@ -921,7 +1086,7 @@
                 <li><a href="#categories">Categorías</a></li>
                 <li><a href="#videos">Videos</a></li>
                 <li><a href="#tiktok-feed">TikTok Live</a></li>
-                <li><a href="#contact">Contacto</a></li>
+                <li><a href="#contact-business">Contacto</a></li>
             </ul>
         </div>
     </nav>
@@ -1082,7 +1247,7 @@
 
 
             <div class="video-card" data-category="news" onclick="window.open('https://www.tiktok.com/@todoaqui_bol/video/7532314746268175621', '_blank')">
-                <div class="video-thumbnail" style="background-image: url('https://p16-sign-va.tiktokcdn.com/tos-maliva-p-0068/ogeT6AJDoC5puLXFEAAODAE2EBoIfidQQRIMCH~tplv-tiktokx-dmt-logom:tos-useast2a-v-0068/oQfogXREETDijR8EfyFTHIAYB8A5QQC4OPAJ0A.image'); background-size: cover; background-position: center;">
+                <div class="video-thumbnail" style="background-image: url('https://p16-sign-va.tiktokcdn.com/tos-maliva-p-0068/ogeT6AJDoC5puLXFEAAODAE2EBoIfidQQRIMCH~tplv-tiktokx-dmt-logom:tos-useast2a-v-0068/oQfogXREETDijR8EfyFTHIAYB8A5QQC4OPAJ0A.image?dr=14573&x-expires=1754100000&x-signature=v9VbQpX4qR1Rg0NNqJcvQxGCmxk%3D&t=4d5b0474&ps=13740610&shp=b59d6b55&shcp=43f4a2f9&idc=maliva'); background-size: cover; background-position: center;">
                     <div class="play-button">
                         <div class="play-icon"></div>
                     </div>
@@ -1112,8 +1277,13 @@
     <!-- TikTok Feed Section -->
     <section class="tiktok-feed" id="tiktok-feed">
         <h2 class="section-title">Últimos Videos en TikTok</h2>
-        <p style="text-align: center; margin-bottom: 3rem; opacity: 0.8;">Síguenos en @todoaqui_bol para más contenido boliviano</p>
-        <div class="tiktok-widget-container">
+        <p style="text-align: center; margin-bottom: 1rem; opacity: 0.8;">Síguenos en @todoaqui_bol para más contenido boliviano</p>
+        <p style="text-align: center; margin-bottom: 3rem;">
+            <button onclick="refreshTikTokWidget()" style="background: var(--glass); border: 1px solid var(--glass-border); color: var(--light); padding: 0.5rem 1.5rem; border-radius: 20px; cursor: pointer; font-size: 0.9rem; transition: all 0.3s ease;">
+                🔄 Actualizar Videos
+            </button>
+        </p>
+        <div class="tiktok-widget-container" id="tiktok-widget-container">
             <!-- TikTok Profile Embed Widget -->
             <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@todoaqui_bol" data-unique-id="todoaqui_bol" data-embed-type="creator" style="max-width: 100%; min-width: 288px;">
                 <section>
@@ -1123,13 +1293,63 @@
         </div>
     </section>
 
+    <!-- Contact Section -->
+    <section class="contact-section" id="contact-business">
+        <div class="contact-container">
+            <h2 class="section-title">Contacto Empresarial</h2>
+            <p class="contact-subtitle">¿Interesado en colaborar con Todo Aquí Bolivia?</p>
+            
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Para consultas comerciales y colaboraciones</h3>
+                    <p>Nos encantaría escuchar tus propuestas de negocios, patrocinios, colaboraciones de contenido y oportunidades publicitarias.</p>
+                    
+                    <div class="contact-card">
+                        <div class="contact-icon">📧</div>
+                        <div class="contact-details">
+                            <h4>Email de Negocios</h4>
+                            <a href="mailto:todoaqui.revista.bolivia@gmail.com" class="contact-email">todoaqui.revista.bolivia@gmail.com</a>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-features">
+                        <div class="feature-item">
+                            <span class="feature-icon">🎯</span>
+                            <span>Publicidad Dirigida</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">🤝</span>
+                            <span>Colaboraciones</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">📱</span>
+                            <span>Contenido Patrocinado</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">🎬</span>
+                            <span>Producción de Videos</span>
+                        </div>
+                    </div>
+                    
+                    <p class="response-time">⏱️ Tiempo de respuesta: 24-48 horas</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer id="contact">
         <div class="social-links">
-            <a href="https://www.tiktok.com/@todoaqui_bol" target="_blank" class="social-link" aria-label="TikTok">📱</a>
-            <a href="#" class="social-link" aria-label="Instagram">📷</a>
-            <a href="#" class="social-link" aria-label="YouTube">🎥</a>
-            <a href="#" class="social-link" aria-label="Twitter">🐦</a>
+            <a href="https://www.tiktok.com/@todoaqui_bol" target="_blank" class="social-link" aria-label="TikTok">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+                </svg>
+            </a>
+            <a href="https://www.instagram.com/todoaqui_bol/" target="_blank" class="social-link" aria-label="Instagram">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zM5.838 12a6.162 6.162 0 1 1 12.324 0 6.162 6.162 0 0 1-12.324 0zM12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm4.965-10.405a1.44 1.44 0 1 1 2.881.001 1.44 1.44 0 0 1-2.881-.001z"/>
+                </svg>
+            </a>
         </div>
         <p>&copy; 2025 Todo Aquí Bolivia. Todos los derechos reservados.</p>
         <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.8;">Hecho con ❤️ en La Paz, Bolivia 🇧🇴</p>
@@ -1299,6 +1519,37 @@
         // Dynamic year in footer
         const currentYear = new Date().getFullYear();
         document.querySelector('footer p').innerHTML = `&copy; ${currentYear} Todo Aquí Bolivia. Todos los derechos reservados.`;
+
+        // Refresh TikTok Widget Function
+        function refreshTikTokWidget() {
+            const container = document.getElementById('tiktok-widget-container');
+            const timestamp = new Date().getTime();
+            
+            // Show loading state
+            container.innerHTML = '<p style="text-align: center; color: var(--light); padding: 3rem;">🔄 Actualizando videos...</p>';
+            
+            // Recreate the widget with cache-busting
+            setTimeout(() => {
+                container.innerHTML = `
+                    <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@todoaqui_bol?t=${timestamp}" data-unique-id="todoaqui_bol" data-embed-type="creator" style="max-width: 100%; min-width: 288px;">
+                        <section>
+                            <a target="_blank" href="https://www.tiktok.com/@todoaqui_bol?refer=creator_embed">@todoaqui_bol</a>
+                        </section>
+                    </blockquote>
+                `;
+                
+                // Reload TikTok embed script
+                if (window.tiktok && window.tiktok.Widget) {
+                    window.tiktok.Widget.createAndMountWidgets();
+                } else {
+                    // Reload the script if needed
+                    const script = document.createElement('script');
+                    script.src = 'https://www.tiktok.com/embed.js';
+                    script.async = true;
+                    document.body.appendChild(script);
+                }
+            }, 500);
+        }
     </script>
 
     <!-- TikTok Embed Script -->
